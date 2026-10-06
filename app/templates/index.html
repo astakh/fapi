@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- Форма добавления задачи -->
+<section class="task-form-section">
+    <h2>Добавить задачу</h2>
+    <form
+        hx-post="/tasks"
+        hx-target="#task-list"
+        hx-swap="afterbegin"
+        hx-on::after-request="if(event.detail.successful) this.reset()"
+    >
+        <label for="title">Название:</label>
+        <input
+            type="text"
+            id="title"
+            name="title"
+            placeholder="Что нужно сделать?"
+            required
+            maxlength="200"
+        >
+
+        <label for="description">Описание (необязательно):</label>
+        <textarea
+            id="description"
+            name="description"
+            placeholder="Подробности..."
+            rows="2"
+            maxlength="1000"
+        ></textarea>
+
+        <button type="submit">Добавить</button>
+    </form>
+</section>
+
+<!-- Список задач -->
+<section class="task-list-section">
+    <h2>Задачи</h2>
+    <div id="task-list">
+        {% for task in tasks %}
+            {% include "task_item.html" %}
+        {% endfor %}
+    </div>
+
+    {% if not tasks %}
+        <p class="empty-state">Задач пока нет. Добавьте первую!</p>
+    {% endif %}
+</section>
+
+{% endblock %}

@@ -1,0 +1,38 @@
+<!-- Частичный шаблон одной задачи. Используется и в списке, и в HTMX-ответах. -->
+<div
+    id="task-{{ task.id }}"
+    class="task-item {% if task.completed %}task-completed{% endif %}"
+>
+    <div class="task-content">
+        <span class="task-title">{{ task.title }}</span>
+        {% if task.description %}
+            <span class="task-description">{{ task.description }}</span>
+        {% endif %}
+        <span class="task-date">{{ task.created_at.strftime('%d.%m.%Y %H:%M') }}</span>
+    </div>
+
+    <div class="task-actions">
+        <!-- Кнопка переключения статуса -->
+        <button
+            hx-post="/tasks/{{ task.id }}/toggle"
+            hx-target="#task-{{ task.id }}"
+            hx-swap="outerHTML"
+            class="btn-toggle"
+            title="{% if task.completed %}Отменить выполнение{% else %}Отметить выполненным{% endif %}"
+        >
+            {% if task.completed %}↩️{% else %}✅{% endif %}
+        </button>
+
+        <!-- Кнопка удаления -->
+        <button
+            hx-post="/tasks/{{ task.id }}/delete"
+            hx-target="#task-{{ task.id }}"
+            hx-swap="outerHTML"
+            hx-confirm="Удалить задачу «{{ task.title }}»?"
+            class="btn-delete"
+            title="Удалить"
+        >
+            🗑️
+        </button>
+    </div>
+</div>
