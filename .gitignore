@@ -1,5 +1,37 @@
+# Node.js (для сборки документации)
 node_modules/
-.next/
 dist/
 build/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+*.egg
+.eggs/
+venv/
+.venv/
+env/
+
+# Переменные окружения (НЕ коммитить .env с паролями)
+.env
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Логи
 *.log
+
+# Alembic
+alembic/versions/__pycache__/
+.next/
